@@ -106,6 +106,9 @@ public class Menu {
         BookService bookService = new BookServiceImpl();
         Book book = new Book();
 
+//        System.out.print("ID: ");
+//        book.setId(input.nextInt());
+
         System.out.print("Title: ");
         book.setTitle(input.next());
 

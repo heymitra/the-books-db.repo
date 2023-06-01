@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class BookRepositoryImpl implements BookRepository {
 
     @Override
-    public void save(Book book) throws SQLException {
+    public void save(Book book) {
 
         Connection connection = ApplicationContext.getConnection();
 
@@ -50,7 +50,8 @@ public class BookRepositoryImpl implements BookRepository {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
-            return new Book(resultSet.getString(2),
+            return new Book(bookId,
+                    resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4));
         }
@@ -97,9 +98,22 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public void delete(Book book) throws SQLException {
         Connection connection = ApplicationContext.getConnection();
-        String delete = "delete from book where  id = ?;";
+        book.setId(findId(book));
+        String delete = "delete from book where id = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(delete);
         preparedStatement.setInt(1, book.getId());
         preparedStatement.execute();
+    }
+
+    private int findId(Book book) throws SQLException {
+        Connection connection = ApplicationContext.getConnection();
+        String find = "select id from book where  title = ? and publish_year = ? and author_id = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(find);
+        preparedStatement.setString(1, book.getTitle());
+        preparedStatement.setString(2, book.getPublishYear());
+        preparedStatement.setInt(3, book.getAuthorId());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
     }
 }
