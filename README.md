@@ -37,7 +37,7 @@ The directory structure of this project is as below: <br>
           - TableRepository: contains all methods which may be applied to data (save, delete, etc.).
           - TableRepositoryImpl: implements the methods of TableRepository.
         - **service**
-          - TableService: contains the same methods as TableRepository. Implements those methods by validating and then calling TableRepository. Do not call TableRepository directly from App. Call Service, and it will call the considered method from the repository after validating.
+          - TableService: contains the same methods as TableRepository. Implements those methods by validating and then calling TableRepository. (Do not call TableRepository directly from App. Call Service, and it will call the considered method from the repository after validating.)
         - **config**
           - DatabaseConfig: contains a method named `getCreateConnection` that returns an object of `Connection`. Inside this method, the Connection is made using the `getConnection` method of the `DriverManager` class.
           - DatabaseConnector: acts as an intermediary between the Connection made in DataConnector and other parts of the program where we need to create this connection. It checks whether the connection is already made before returning it or creates a new connection if it is null.
