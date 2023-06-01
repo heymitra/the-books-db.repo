@@ -1,4 +1,4 @@
-package org.example;
+package org.example.ui;
 
 import org.example.entity.Author;
 import org.example.entity.Book;
@@ -6,6 +6,8 @@ import org.example.service.AuthorService;
 import org.example.service.AuthorServiceImpl;
 import org.example.service.BookService;
 import org.example.service.BookServiceImpl;
+import org.example.util.ApplicationContext;
+import org.example.util.Constant;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -21,12 +23,7 @@ public class Menu {
 
     public static void menu() throws SQLException {
 
-        System.out.println("\n1. Insert new author" +
-                "\n2. Insert new book" +
-                "\n3. Load author and his books using author id" +
-                "\n4. Load book info using book id" +
-                "\n5. Delete a book" +
-                "\nany other keys to exit");
+        System.out.println(Constant.menu);
 
         int option = input.nextInt();
 
@@ -55,7 +52,7 @@ public class Menu {
 
     private static void saveAuthor() throws SQLException {
 
-        AuthorService authorService = new AuthorServiceImpl();
+        AuthorService authorService = ApplicationContext.getAuthorService();
         Author author = new Author();
 
         System.out.print("First Name: ");
@@ -72,7 +69,7 @@ public class Menu {
 
     private static void saveBook() throws SQLException {
 
-        BookService bookService = new BookServiceImpl();
+        BookService bookService = ApplicationContext.getBookService();
         Book book = new Book();
 
         System.out.print("Title: ");
@@ -89,21 +86,21 @@ public class Menu {
 
     private static void loadAuthor() throws SQLException {
 
-        AuthorService authorService = new AuthorServiceImpl();
+        AuthorService authorService = ApplicationContext.getAuthorService();
         System.out.println("Author ID: ");
         System.out.println(authorService.load(input.nextInt()));
     }
 
     private static void loadBook() throws SQLException {
 
-        BookService bookService = new BookServiceImpl();
+        BookService bookService = ApplicationContext.getBookService();
         System.out.println("Book ID: ");
         System.out.println(bookService.load(input.nextInt()));
     }
 
     private static void deleteBook() throws SQLException {
 
-        BookService bookService = new BookServiceImpl();
+        BookService bookService = ApplicationContext.getBookService();
         Book book = new Book();
 
 //        System.out.print("ID: ");
