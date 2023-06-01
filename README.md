@@ -11,14 +11,14 @@ The directory structure of this project is as below: <br>
 &nbsp;   |____main
 &nbsp;       |____java
 &nbsp;           |____org.example
-&nbsp;               |_____(p) entity: (C)Table(s)
+&nbsp;               |_____(p) entity:     (C)Table(s)
 &nbsp;               |_____(p) repository: (I)TableRepository(s) + (C)TableRepositoryImpl(s)
-&nbsp;               |_____(p) service: (I)TableService(s) + (C)TableServiceImpl(s)
-&nbsp;               |_____(p) config: (C)DataBaseConfig + (C)DataConnector
-&nbsp;               |_____(p) util: (C)ApplicationContext + (C)Constant
-&nbsp;               |_____(p) sql: console
-&nbsp;               |_____(p) ui: (C)Menu
-&nbsp;               |_____(C) App(contains psvm)
+&nbsp;               |_____(p) service:    (I)TableService(s) + (C)TableServiceImpl(s)
+&nbsp;               |_____(p) config:     (C)DataBaseConfig + (C)DataConnector
+&nbsp;               |_____(p) util:       (C)ApplicationContext + (C)Constant
+&nbsp;               |_____(p) sql:        console
+&nbsp;               |_____(p) ui:         (C)Menu
+&nbsp;               |_____(C) App         (contains psvm)
 </pre>
 
 
