@@ -9,7 +9,11 @@ import java.sql.SQLException;
 
 public class BookServiceImpl implements BookService {
 
-    BookRepository bookRepository = new BookRepositoryImpl();
+    private final BookRepository bookRepository;
+
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @Override
     public void addBook(Book book) throws SQLException {
