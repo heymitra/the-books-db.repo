@@ -1,7 +1,7 @@
 package org.example.repository;
 
 import org.example.entity.Book;
-import org.example.util.ApplicationContext;
+import org.example.config.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +10,14 @@ import java.sql.SQLException;
 
 public class BookRepositoryImpl implements BookRepository {
 
+    private final Connection connection;
+
+    public BookRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void save(Book book) {
-
-        Connection connection = ApplicationContext.getConnection();
 
         try {
             // Create a PreparedStatement to insert a new book
@@ -43,7 +47,6 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book load(int bookId) throws SQLException {
 
-        Connection connection = ApplicationContext.getConnection();
         String load = "select * from book where id = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(load);
         preparedStatement.setInt(1, bookId);
@@ -63,7 +66,7 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book[] loadByAuthorId(int authorId) throws SQLException {
 
-        Connection connection = ApplicationContext.getConnection();
+        Connection connection = DatabaseConnector.getConnection();
         String loadByAuthorId = "select * from book where author_id = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(loadByAuthorId,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -97,7 +100,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void delete(Book book) throws SQLException {
-        Connection connection = ApplicationContext.getConnection();
+        Connection connection = DatabaseConnector.getConnection();
         book.setId(findId(book));
         String delete = "delete from book where id = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(delete);
@@ -106,7 +109,7 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     private int findId(Book book) throws SQLException {
-        Connection connection = ApplicationContext.getConnection();
+        Connection connection = DatabaseConnector.getConnection();
         String find = "select id from book where  title = ? and publish_year = ? and author_id = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(find);
         preparedStatement.setString(1, book.getTitle());
