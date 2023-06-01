@@ -1,0 +1,52 @@
+package org.example.repository;
+
+import org.example.entity.Author;
+import org.example.util.ApplicationContext;
+
+import java.sql.*;
+
+public class AuthorRepositoryImpl implements AuthorRepository {
+
+    @Override
+    public void save(Author author) throws SQLException {
+
+        Connection connection = ApplicationContext.getConnection();
+
+        String insert = "insert into author (first_name, last_name, age) " +
+                "values (?, ?, ?);";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(insert,
+                PreparedStatement.RETURN_GENERATED_KEYS);
+
+        preparedStatement.setString(1, author.getFirstName());
+        preparedStatement.setString(2, author.getLastName());
+        preparedStatement.setInt(3, author.getAge());
+        preparedStatement.execute();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+        if (resultSet.next()) {
+            author.setId(resultSet.getInt(1));
+        }
+    }
+
+
+    @Override
+    public Author load(int authorId) throws SQLException {
+
+        Connection connection = ApplicationContext.getConnection();
+        String load = "select * from author where id = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(load);
+        preparedStatement.setInt(1, authorId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return new Author(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4));
+        }
+
+        System.out.println("There is no such author.");
+        return null;
+    }
+}
