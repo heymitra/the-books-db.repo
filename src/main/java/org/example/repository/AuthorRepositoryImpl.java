@@ -1,16 +1,19 @@
 package org.example.repository;
 
 import org.example.entity.Author;
-import org.example.util.ApplicationContext;
 
 import java.sql.*;
 
 public class AuthorRepositoryImpl implements AuthorRepository {
 
+    private final Connection connection;
+
+    public AuthorRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void save(Author author) throws SQLException {
-
-        Connection connection = ApplicationContext.getConnection();
 
         String insert = "insert into author (first_name, last_name, age) " +
                 "values (?, ?, ?);";
@@ -33,7 +36,6 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     @Override
     public Author load(int authorId) throws SQLException {
 
-        Connection connection = ApplicationContext.getConnection();
         String load = "select * from author where id = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(load);
         preparedStatement.setInt(1, authorId);
