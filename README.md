@@ -40,7 +40,7 @@ The directory structure of this project is as below: <br>
           - TableService: contains the same methods as TableRepository. Implements those methods by validating and then calling TableRepository. (TableRepository should not be called directly from ui. It is suggested to call Service, and it will call the considered method from the repository after validating.)
         - **config**
           - DatabaseConfig: contains a method named `getCreateConnection` that returns an object of `Connection`. Inside this method, the Connection is made using the `getConnection` method of the `DriverManager` class.
-          - DatabaseConnector: acts as an intermediary between the Connection made in DataConnector and other parts of the program where we need to create this connection. It checks whether the connection is already made before returning it or creates a new connection if it is null.
+          - DatabaseConnector: acts as an intermediary between the Connection made in DataConnector and other parts of the program where we need to create this connection. It checks whether the connection is already made before returning it or creates a new connection if it is null using `getCreateConnection` from `DatabaseConfig` class.
         - **util**
           - For utility classes that provide common functionalities across the JDBC project.
 
