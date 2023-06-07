@@ -1,6 +1,5 @@
 package org.example.util;
 
-import org.example.config.DatabaseConfig;
 import org.example.config.DatabaseConnector;
 import org.example.repository.AuthorRepository;
 import org.example.repository.AuthorRepositoryImpl;
@@ -21,7 +20,7 @@ public class ApplicationContext {
     private static BookServiceImpl bookService;
 
     static {
-        Connection connection = new DatabaseConnector().getConnection();
+        connection = new DatabaseConnector().getConnection();
         authorRepository = new AuthorRepositoryImpl(connection);
         authorService = new AuthorServiceImpl(authorRepository);
         bookRepository = new BookRepositoryImpl(connection);

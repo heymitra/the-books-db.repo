@@ -6,7 +6,8 @@ import java.sql.SQLException;
 
 public interface AuthorRepository {
 
-    void save (Author author) throws SQLException;
-    Author load (int authorId) throws SQLException;
+    int save(Author author) throws SQLException;
+
+    Author load(int authorId) throws SQLException;
 }
 

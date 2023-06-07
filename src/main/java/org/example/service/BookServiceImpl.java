@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.entity.Book;
 import org.example.repository.BookRepository;
-import org.example.repository.BookRepositoryImpl;
+import org.example.util.ApplicationContext;
 
 import java.sql.SQLException;
 
@@ -16,18 +16,29 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addBook(Book book) throws SQLException {
-        bookRepository.save(book);
+    public void addBook(String title, String publishYear, int authorId) throws SQLException {
+        int bookId = bookRepository.save(new Book(title, publishYear, authorId));
+        if (bookId == 0)
+            System.out.println("There is no author with this author ID.");
+        else
+            System.out.println("Book added successfully.\nBook ID: " + bookId);
     }
 
     @Override
-    public Book load(int bookId) throws SQLException {
-        return bookRepository.load(bookId);
+    public void load(int bookId) throws SQLException {
+        Book result = bookRepository.load(bookId);
+        if (result == null)
+            System.out.println("There is no such book.");
+        else {
+            AuthorService authorService = ApplicationContext.getAuthorService();
+            System.out.println(authorService.load(result.getAuthorId()));
+            System.out.println(result);
+        }
     }
 
     @Override
-    public void delete(Book book) throws SQLException {
-        bookRepository.delete(book);
+    public void delete(int bookId) throws SQLException {
+        bookRepository.delete(bookId);
     }
 
     @Override
