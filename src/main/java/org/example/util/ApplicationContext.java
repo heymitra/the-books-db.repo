@@ -7,6 +7,7 @@ import org.example.repository.BookRepository;
 import org.example.repository.BookRepositoryImpl;
 import org.example.service.AuthorService;
 import org.example.service.AuthorServiceImpl;
+import org.example.service.BookService;
 import org.example.service.BookServiceImpl;
 
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class ApplicationContext {
     private static AuthorRepository authorRepository;
     private static BookRepository bookRepository;
     private static AuthorService authorService;
-    private static BookServiceImpl bookService;
+    private static BookService bookService;
 
     static {
         connection = new DatabaseConnector().getConnection();
@@ -31,7 +32,7 @@ public class ApplicationContext {
         return authorService;
     }
 
-    public static BookServiceImpl getBookService() {
+    public static BookService getBookService() {
         return bookService;
     }
 }
